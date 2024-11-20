@@ -1,3 +1,5 @@
+from fastapi_pagination import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
 from src.database.database import session_maker
 from src.models.models import Sport
 
@@ -9,6 +11,7 @@ from src.models.models import Sport
 #     db.commit()     # сохраняем изменения
 #     print(tom.id)   # можно получить установленный id
 
-def getAllSports():
+def getAllSports() -> Page[Sport]:
     with session_maker() as db:
-        return db.query(Sport).all()
+        query = db.query(Sport)
+        return paginate(query)

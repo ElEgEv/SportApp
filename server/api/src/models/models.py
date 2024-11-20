@@ -1,7 +1,10 @@
-from sqlalchemy.orm import DeclarativeBase
+from pydantic import BaseModel
+from sqlalchemy.orm import declarative_base
 from sqlalchemy import  Column, Date, Integer, String
+import datetime
+from typing import Optional
   
-class Base(DeclarativeBase): pass
+Base = declarative_base()
   
 class Sport(Base):
     __tablename__ = "sports"
@@ -20,3 +23,36 @@ class User(Base):
     date_birthday = Column(Date)
     sports_category = Column(String)
     avatars = Column(String)
+    
+class UserLogin(BaseModel):
+    email: str
+    password: str
+    
+# model for pagination
+class UserOut(BaseModel):
+    id: int
+    name: str
+    email: str
+    date_birthday: Optional[datetime.date] = None
+    sports_category: Optional[str] = None
+    avatars: Optional[str] = None
+
+    # for work pydantic with sqlalchemy model
+    class Config:
+        orm_mode = True
+        
+class UserCreateModel(BaseModel):  
+    name: str
+    email: str
+    password: str
+    date_birthday: datetime.date
+    sports_category: str
+        
+class SportOut(BaseModel):
+    id: int
+    name: str
+    trainer: str
+    
+    class Config:
+        orm_mode = True
+    
