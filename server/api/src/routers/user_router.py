@@ -1,7 +1,7 @@
 import datetime
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from fastapi_pagination import Page
-from typing import Annotated
+from typing import Annotated, Optional
 from src.utils.FileOperator import get_file_format
 from src.repository import UsersRepository
 from src.models.models import User, UserCreateModel, UserLogin, UserOut
@@ -12,6 +12,7 @@ import os
 from authlib.integrations.starlette_client import OAuthError
 from src.utils.auth_handler import sign_jwt
 from src.utils.auth_bearer import JWTBearer
+from src.repository.UsersRepository import updateUser
 
 load_dotenv('.env')
 
@@ -39,18 +40,18 @@ async def sign_in_user(user: UserLogin):
     user_data = UsersRepository.checkUser(user)
     
     if not user_data:
-        return HTTPException(status_code=410, detail="Incorrect email or password")
+        return HTTPException(status_code=403, detail="Неверная почта или пароль")
     
     return {"token": sign_jwt(user.email), "user_data" : user_data}
     
 
-@router.post("/create")
+@router.post("/create", description="Upload a file with multipart/form-data")
 async def create_user(name: Annotated[str, Form()],
                       email: Annotated[str, Form()],
                       password: Annotated[str, Form()],
                       date_birthday: Annotated[datetime.date, Form()],
                       sports_category: Annotated[str, Form()],
-                      avatar: UploadFile = File(None)
+                      avatar: Optional[UploadFile] = File(None),
                     ):
 
     if avatar:
@@ -58,7 +59,7 @@ async def create_user(name: Annotated[str, Form()],
         
         if file_format not in ['png', 'jpg', 'jpeg']:
             raise HTTPException(status_code=405, detail="Incorrect image format")
-        
+
     user = UserCreateModel( name=name, 
                             email=email, 
                             password=password, 
@@ -67,6 +68,37 @@ async def create_user(name: Annotated[str, Form()],
                         )
     
     return UsersRepository.createUser(user, avatar)
+
+@router.put("/update")
+def update_user(id: int, 
+                name: Annotated[str, Form()],
+                email: Annotated[str, Form()],
+                password: Annotated[str, Form()],
+                date_birthday: Annotated[datetime.date, Form()],
+                sports_category: Annotated[str, Form()],
+                avatar: Optional[UploadFile] = File(None),
+            ):
+    if avatar:
+        file_format = get_file_format(avatar)
+        
+        if file_format not in ['png', 'jpg', 'jpeg']:
+            raise HTTPException(status_code=405, detail="Incorrect image format")
+    
+    user = UsersRepository.getUserById(id)
+    
+    if not user:    
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    data = UserCreateModel(
+        name=name,
+        email=email, 
+        password=password, 
+        date_birthday=date_birthday, 
+        sports_category=sports_category
+    )
+    
+    return UsersRepository.updateUser(id, data, avatar)
+
 
 @router.delete("/{id}")
 async def delete_user_by_id(id: int):
