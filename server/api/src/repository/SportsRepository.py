@@ -1,13 +1,13 @@
 from sqlalchemy.orm import joinedload
-from fastapi_pagination import Page
+from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from src.database.database import session_maker
 from src.models.models import Sport
 
-def getAllSports() -> Page[Sport]:
+def getAllSports(params: Params) -> Page[Sport]:
     with session_maker() as db:
         query = db.query(Sport)
-        return paginate(query)
+        return paginate(query, params=params)
     
 def getSportById(id: int):
     with session_maker() as db:

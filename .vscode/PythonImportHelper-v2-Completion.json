@@ -387,7 +387,39 @@
         "documentation": {}
     },
     {
+        "label": "Depends",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Depends",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -539,7 +571,7 @@
         "documentation": {}
     },
     {
-        "label": "Page",
+        "label": "Params",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
         "isExtraImport": true,
@@ -564,6 +596,38 @@
     },
     {
         "label": "Page",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Page",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
         "isExtraImport": true,
@@ -939,6 +1003,47 @@
         "documentation": {}
     },
     {
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "RedirectResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
+        "documentation": {}
+    },
+    {
+        "label": "get_pagination_params",
+        "importPath": "src.utils.template_pagination",
+        "description": "src.utils.template_pagination",
+        "isExtraImport": true,
+        "detail": "src.utils.template_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "src.repository.SportsRepository",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "src.repository.SportsRepository",
+        "description": "src.repository.SportsRepository",
+        "detail": "src.repository.SportsRepository",
+        "documentation": {}
+    },
+    {
         "label": "createUserCompetition",
         "importPath": "src.repository.UserCompetitionRepository",
         "description": "src.repository.UserCompetitionRepository",
@@ -1095,14 +1200,6 @@
         "documentation": {}
     },
     {
-        "label": "RedirectResponse",
-        "importPath": "fastapi.responses",
-        "description": "fastapi.responses",
-        "isExtraImport": true,
-        "detail": "fastapi.responses",
-        "documentation": {}
-    },
-    {
         "label": "router",
         "importPath": "src.routers.sports_router",
         "description": "src.routers.sports_router",
@@ -1140,6 +1237,56 @@
         "description": "src.routers.user_competition_router",
         "isExtraImport": true,
         "detail": "src.routers.user_competition_router",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "src.routers.template_router",
+        "description": "src.routers.template_router",
+        "isExtraImport": true,
+        "detail": "src.routers.template_router",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "async_playwright",
+        "importPath": "playwright.async_api",
+        "description": "playwright.async_api",
+        "isExtraImport": true,
+        "detail": "playwright.async_api",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "TestClient",
+        "importPath": "fastapi.testclient",
+        "description": "fastapi.testclient",
+        "isExtraImport": true,
+        "detail": "fastapi.testclient",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "importPath": "api.main",
+        "description": "api.main",
+        "isExtraImport": true,
+        "detail": "api.main",
         "documentation": {}
     },
     {
@@ -1363,7 +1510,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.SportsRepository",
         "description": "server.api.src.repository.SportsRepository",
-        "peekOfCode": "def getAllSports() -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport)\n        return paginate(query)\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
+        "peekOfCode": "def getAllSports(params: Params) -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport)\n        return paginate(query, params=params)\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
         "detail": "server.api.src.repository.SportsRepository",
         "documentation": {}
     },
@@ -1525,8 +1672,26 @@
         "kind": 5,
         "importPath": "server.api.src.routers.sports_router",
         "description": "server.api.src.routers.sports_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/sports\",\n    tags=[\"Sports CRUD\"],\n)\n@router.get(\"/\", response_model=Page[SportOut])\nasync def get_sports():\n    page = SportsRepository.getAllSports()\n    return page\n@router.get(\"/{id}\")\nasync def get_sport_by_id(id: int):",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/sports\",\n    tags=[\"Sports CRUD\"],\n)\n@router.get(\"/\", response_model=Page[SportOut])\nasync def get_sports(params: Params = Depends()):\n    page = SportsRepository.getAllSports(params)\n    return page\n@router.get(\"/{id}\")\nasync def get_sport_by_id(id: int):",
         "detail": "server.api.src.routers.sports_router",
+        "documentation": {}
+    },
+    {
+        "label": "templates",
+        "kind": 5,
+        "importPath": "server.api.src.routers.template_router",
+        "description": "server.api.src.routers.template_router",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})",
+        "detail": "server.api.src.routers.template_router",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "server.api.src.routers.template_router",
+        "description": "server.api.src.routers.template_router",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})",
+        "detail": "server.api.src.routers.template_router",
         "documentation": {}
     },
     {
@@ -1683,11 +1848,20 @@
         "documentation": {}
     },
     {
+        "label": "get_pagination_params",
+        "kind": 2,
+        "importPath": "server.api.src.utils.template_pagination",
+        "description": "server.api.src.utils.template_pagination",
+        "peekOfCode": "def get_pagination_params(page: int = 1, size: int = 15) -> Params:\n    return Params(page=page, size=size)",
+        "detail": "server.api.src.utils.template_pagination",
+        "documentation": {}
+    },
+    {
         "label": "redirect_to_swagger",
         "kind": 2,
         "importPath": "server.api.main",
         "description": "server.api.main",
-        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\napp.include_router(sports_router)\napp.include_router(user_router)\napp.include_router(user_sport_router)\napp.include_router(competition_router)\napp.include_router(user_competition_router)\nif __name__ == \"__main__\":\n    import uvicorn\n    uvicorn.run(\"main:app\", host=\"localhost\", port=8000, reload=True)",
+        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\napp.include_router(sports_router)\napp.include_router(user_router)\napp.include_router(user_sport_router)\napp.include_router(competition_router)\napp.include_router(user_competition_router)\napp.include_router(template_router)\nif __name__ == \"__main__\":\n    import uvicorn",
         "detail": "server.api.main",
         "documentation": {}
     },
@@ -1698,6 +1872,42 @@
         "description": "server.api.main",
         "peekOfCode": "app = FastAPI(\n    title=\"Учёт результатов спортивных соревнований\", \n    description=\"Данная API предназначена для курсовой работы в рамках предмета ТПО\", \n    version=\"1.0.1\"\n)\nadd_pagination(app)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,",
         "detail": "server.api.main",
+        "documentation": {}
+    },
+    {
+        "label": "test_create_item",
+        "kind": 2,
+        "importPath": "server.api.test",
+        "description": "server.api.test",
+        "peekOfCode": "def test_create_item():\n    logger.info(\"Тестируем создание сущности Sport\")\n    response = client.post(\n        \"/api/sports/\", json={\"name\": \"Тестовый\", \"trainer\": \"Тестер Тестерович\"}\n    )\n    assert response.status_code == 200\n    assert response.json() == {}\n@pytest.mark.asyncio\nasync def test_return_templates_2():\n    logger.info(\"Тестируем получение несуществующей страницы\")",
+        "detail": "server.api.test",
+        "documentation": {}
+    },
+    {
+        "label": "test_put_item",
+        "kind": 2,
+        "importPath": "server.api.test",
+        "description": "server.api.test",
+        "peekOfCode": "def test_put_item():\n    logger.info(\"Тестируем обновление сущности Sport\")\n    response = client.put(\n        \"/api/sports/1\", json={\"id\": 1, \"name\": \"Тестовый\", \"trainer\": \"Тестер Тестерович\"}\n    )\n    assert response.status_code == 200\n    assert response.json() == {\"id\": 1, \"name\": \"Тестовый\", \"trainer\": \"Тестер Тестерович\"}",
+        "detail": "server.api.test",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "server.api.test",
+        "description": "server.api.test",
+        "peekOfCode": "logger = logging.getLogger(__name__)\nclient = TestClient(app)\n@pytest.mark.asyncio\nasync def test_return_templates():\n    logger.info(\"Тестируем получение существующей страницы\")\n    response = client.get(\"/api/templates/sports\")\n    assert response.status_code == 200\ndef test_create_item():\n    logger.info(\"Тестируем создание сущности Sport\")\n    response = client.post(",
+        "detail": "server.api.test",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 5,
+        "importPath": "server.api.test",
+        "description": "server.api.test",
+        "peekOfCode": "client = TestClient(app)\n@pytest.mark.asyncio\nasync def test_return_templates():\n    logger.info(\"Тестируем получение существующей страницы\")\n    response = client.get(\"/api/templates/sports\")\n    assert response.status_code == 200\ndef test_create_item():\n    logger.info(\"Тестируем создание сущности Sport\")\n    response = client.post(\n        \"/api/sports/\", json={\"name\": \"Тестовый\", \"trainer\": \"Тестер Тестерович\"}",
+        "detail": "server.api.test",
         "documentation": {}
     }
 ]

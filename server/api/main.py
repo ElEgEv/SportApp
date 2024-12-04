@@ -10,6 +10,7 @@ from src.routers.user_router import router as user_router
 from src.routers.user_sport_router import router as user_sport_router
 from src.routers.competition_router import router as competition_router
 from src.routers.user_competition_router import router as user_competition_router
+from src.routers.template_router import router as template_router
 
 app = FastAPI(
     title="Учёт результатов спортивных соревнований", 
@@ -42,6 +43,8 @@ app.include_router(user_sport_router)
 app.include_router(competition_router)
 
 app.include_router(user_competition_router)
+
+app.include_router(template_router)
 
 if __name__ == "__main__":
     import uvicorn

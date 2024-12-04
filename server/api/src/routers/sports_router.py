@@ -1,5 +1,5 @@
-from fastapi import APIRouter, HTTPException
-from fastapi_pagination import Page
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi_pagination import Page, Params
 from src.repository import SportsRepository
 from src.models.models import Sport, SportCreateModel, SportOut
 import typing
@@ -10,8 +10,8 @@ router = APIRouter(
 )
 
 @router.get("/", response_model=Page[SportOut])
-async def get_sports():
-    page = SportsRepository.getAllSports()
+async def get_sports(params: Params = Depends()):
+    page = SportsRepository.getAllSports(params)
     return page
 
 @router.get("/{id}")
