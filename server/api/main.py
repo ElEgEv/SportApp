@@ -15,7 +15,7 @@ from src.routers.template_router import router as template_router
 app = FastAPI(
     title="Учёт результатов спортивных соревнований", 
     description="Данная API предназначена для курсовой работы в рамках предмета ТПО", 
-    version="1.0.1"
+    version="1.0.2"
 )
 
 add_pagination(app)
