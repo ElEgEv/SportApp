@@ -1,5 +1,5 @@
 from pathlib import Path
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
@@ -11,6 +11,7 @@ from src.routers.user_sport_router import router as user_sport_router
 from src.routers.competition_router import router as competition_router
 from src.routers.user_competition_router import router as user_competition_router
 from src.routers.template_router import router as template_router
+from src.models.models import UserOut
 
 app = FastAPI(
     title="Учёт результатов спортивных соревнований", 
@@ -25,7 +26,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
 )
 
 app.mount("/public", StaticFiles(directory=Path("./public")), name="public")
@@ -33,6 +34,14 @@ app.mount("/public", StaticFiles(directory=Path("./public")), name="public")
 @app.get("/")
 def redirect_to_swagger():
     return RedirectResponse(url="/docs")
+
+# @app.middleware("http")
+# async def session_middleware(request: Request, call_next):
+#     # Исключаем страницу `/auth` из проверки сессии
+#     if request.url.path not in ["/api/templates/auth", "/api/templates/registration"] and "session_id" not in request.cookies:
+#         return RedirectResponse(url="/api/templates/auth", status_code=302)
+#     response = await call_next(request)
+#     return response
 
 app.include_router(sports_router)
 

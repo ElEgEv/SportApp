@@ -40,6 +40,14 @@
         "documentation": {}
     },
     {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
         "label": "create_engine",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -475,6 +483,14 @@
         "documentation": {}
     },
     {
+        "label": "Response",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "UploadFile",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -547,7 +563,31 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -587,6 +627,14 @@
         "documentation": {}
     },
     {
+        "label": "Params",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
         "label": "Page",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
@@ -620,6 +668,14 @@
     },
     {
         "label": "Page",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
         "isExtraImport": true,
@@ -859,6 +915,14 @@
         "documentation": {}
     },
     {
+        "label": "UserOut",
+        "importPath": "src.models.models",
+        "description": "src.models.models",
+        "isExtraImport": true,
+        "detail": "src.models.models",
+        "documentation": {}
+    },
+    {
         "label": "UserCompetitionCreateModel",
         "importPath": "src.models.models",
         "description": "src.models.models",
@@ -908,6 +972,22 @@
     },
     {
         "label": "UserSportORM",
+        "importPath": "src.models.models",
+        "description": "src.models.models",
+        "isExtraImport": true,
+        "detail": "src.models.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserOut",
+        "importPath": "src.models.models",
+        "description": "src.models.models",
+        "isExtraImport": true,
+        "detail": "src.models.models",
+        "documentation": {}
+    },
+    {
+        "label": "UserOut",
         "importPath": "src.models.models",
         "description": "src.models.models",
         "isExtraImport": true,
@@ -1003,7 +1083,31 @@
         "documentation": {}
     },
     {
+        "label": "RequestValidationError",
+        "importPath": "fastapi.exceptions",
+        "description": "fastapi.exceptions",
+        "isExtraImport": true,
+        "detail": "fastapi.exceptions",
+        "documentation": {}
+    },
+    {
         "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "RedirectResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "RedirectResponse",
         "importPath": "fastapi.responses",
         "description": "fastapi.responses",
         "isExtraImport": true,
@@ -1027,11 +1131,20 @@
         "documentation": {}
     },
     {
-        "label": "get_pagination_params",
-        "importPath": "src.utils.template_pagination",
-        "description": "src.utils.template_pagination",
+        "label": "src.repository.UsersRepository",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "src.utils.template_pagination",
+        "importPath": "src.repository.UsersRepository",
+        "description": "src.repository.UsersRepository",
+        "detail": "src.repository.UsersRepository",
+        "documentation": {}
+    },
+    {
+        "label": "updateUser",
+        "importPath": "src.repository.UsersRepository",
+        "description": "src.repository.UsersRepository",
+        "isExtraImport": true,
+        "detail": "src.repository.UsersRepository",
         "documentation": {}
     },
     {
@@ -1041,6 +1154,38 @@
         "importPath": "src.repository.SportsRepository",
         "description": "src.repository.SportsRepository",
         "detail": "src.repository.SportsRepository",
+        "documentation": {}
+    },
+    {
+        "label": "cookie",
+        "importPath": "src.routers.user_router",
+        "description": "src.routers.user_router",
+        "isExtraImport": true,
+        "detail": "src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "verifier",
+        "importPath": "src.routers.user_router",
+        "description": "src.routers.user_router",
+        "isExtraImport": true,
+        "detail": "src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "src.routers.user_router",
+        "description": "src.routers.user_router",
+        "isExtraImport": true,
+        "detail": "src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "get_pagination_params",
+        "importPath": "src.utils.template_pagination",
+        "description": "src.utils.template_pagination",
+        "isExtraImport": true,
+        "detail": "src.utils.template_pagination",
         "documentation": {}
     },
     {
@@ -1068,6 +1213,46 @@
         "documentation": {}
     },
     {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
         "label": "OAuthError",
         "importPath": "authlib.integrations.starlette_client",
         "description": "authlib.integrations.starlette_client",
@@ -1084,11 +1269,75 @@
         "documentation": {}
     },
     {
-        "label": "updateUser",
-        "importPath": "src.repository.UsersRepository",
-        "description": "src.repository.UsersRepository",
+        "label": "InMemoryBackend",
+        "importPath": "fastapi_sessions.backends.implementations",
+        "description": "fastapi_sessions.backends.implementations",
         "isExtraImport": true,
-        "detail": "src.repository.UsersRepository",
+        "detail": "fastapi_sessions.backends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "InMemoryBackend",
+        "importPath": "fastapi_sessions.backends.implementations",
+        "description": "fastapi_sessions.backends.implementations",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.backends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "SessionVerifier",
+        "importPath": "fastapi_sessions.session_verifier",
+        "description": "fastapi_sessions.session_verifier",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.session_verifier",
+        "documentation": {}
+    },
+    {
+        "label": "SessionVerifier",
+        "importPath": "fastapi_sessions.session_verifier",
+        "description": "fastapi_sessions.session_verifier",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.session_verifier",
+        "documentation": {}
+    },
+    {
+        "label": "SessionCookie",
+        "importPath": "fastapi_sessions.frontends.implementations",
+        "description": "fastapi_sessions.frontends.implementations",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.frontends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "CookieParameters",
+        "importPath": "fastapi_sessions.frontends.implementations",
+        "description": "fastapi_sessions.frontends.implementations",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.frontends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "SessionCookie",
+        "importPath": "fastapi_sessions.frontends.implementations",
+        "description": "fastapi_sessions.frontends.implementations",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.frontends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "CookieParameters",
+        "importPath": "fastapi_sessions.frontends.implementations",
+        "description": "fastapi_sessions.frontends.implementations",
+        "isExtraImport": true,
+        "detail": "fastapi_sessions.frontends.implementations",
+        "documentation": {}
+    },
+    {
+        "label": "BasicVerifier",
+        "importPath": "src.utils.basic_verifier",
+        "description": "src.utils.basic_verifier",
+        "isExtraImport": true,
+        "detail": "src.utils.basic_verifier",
         "documentation": {}
     },
     {
@@ -1205,14 +1454,6 @@
         "description": "src.routers.sports_router",
         "isExtraImport": true,
         "detail": "src.routers.sports_router",
-        "documentation": {}
-    },
-    {
-        "label": "router",
-        "importPath": "src.routers.user_router",
-        "description": "src.routers.user_router",
-        "isExtraImport": true,
-        "detail": "src.routers.user_router",
         "documentation": {}
     },
     {
@@ -1366,7 +1607,7 @@
         "kind": 6,
         "importPath": "server.api.src.models.models",
         "description": "server.api.src.models.models",
-        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# model for pagination\nclass UserOut(BaseModel):\n    id: int\n    name: str\n    email: str\n    date_birthday: Optional[datetime.date] = None\n    sports_category: Optional[str] = None",
+        "peekOfCode": "class UserLogin(BaseModel):\n    email: str\n    password: str\n# model for pagination\nclass UserOut(BaseModel):\n    id: int\n    name: str\n    email: str\n    password: str\n    date_birthday: Optional[datetime.date] = None",
         "detail": "server.api.src.models.models",
         "documentation": {}
     },
@@ -1375,7 +1616,7 @@
         "kind": 6,
         "importPath": "server.api.src.models.models",
         "description": "server.api.src.models.models",
-        "peekOfCode": "class UserOut(BaseModel):\n    id: int\n    name: str\n    email: str\n    date_birthday: Optional[datetime.date] = None\n    sports_category: Optional[str] = None\n    avatars: Optional[str] = None\n    # for work pydantic with sqlalchemy model\n    class Config:\n        orm_mode = True",
+        "peekOfCode": "class UserOut(BaseModel):\n    id: int\n    name: str\n    email: str\n    password: str\n    date_birthday: Optional[datetime.date] = None\n    sports_category: Optional[str] = None\n    avatars: Optional[str] = None\n    token: Optional[str] = None\n    # for work pydantic with sqlalchemy model",
         "detail": "server.api.src.models.models",
         "documentation": {}
     },
@@ -1510,7 +1751,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.SportsRepository",
         "description": "server.api.src.repository.SportsRepository",
-        "peekOfCode": "def getAllSports(params: Params) -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport)\n        return paginate(query, params=params)\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
+        "peekOfCode": "def getAllSports(params: Params) -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport).order_by(Sport.id)\n        return paginate(query, params=params)\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
         "detail": "server.api.src.repository.SportsRepository",
         "documentation": {}
     },
@@ -1609,7 +1850,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def getAllUsers() -> Page[User]:\n    with session_maker() as db:\n        query = db.query(User)\n        return paginate(query)\ndef checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)",
+        "peekOfCode": "def getAllUsers(params: Params) -> Page[User]:\n    with session_maker() as db:\n        query = db.query(User).order_by(User.id)\n        return paginate(query, params=params)\ndef checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1618,7 +1859,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)\n        if is_user:\n            return user\n        return False\ndef getUserById(id: int):",
+        "peekOfCode": "def checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)\n        if is_user:\n            return user_db\n        return False\ndef getUserById(id: int):",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1645,7 +1886,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def updateUser(id: int, user: UserCreateModel, avatar: UploadFile | None):\n    with session_maker() as db:\n        user_db = db.query(User).get(id)\n        user_db.name = user.name\n        user_db.email = user.email\n        user_db.password = Hasher.get_password_hash(user.password)\n        user_db.date_birthday = user.date_birthday\n        user_db.sports_category = user.sports_category\n        current_file_name = upload_file('users/avatars', avatar, avatar.filename)\n        user_db.avatars = current_file_name",
+        "peekOfCode": "def updateUser(id: int, user: UserCreateModel, avatar: UploadFile | None):\n    with session_maker() as db:\n        user_db = db.query(User).get(id)\n        user_db.name = user.name\n        user_db.email = user.email\n        user_db.password = Hasher.get_password_hash(user.password)\n        user_db.date_birthday = user.date_birthday\n        user_db.sports_category = user.sports_category\n        if avatar:\n            current_file_name = upload_file('users/avatars', avatar, avatar.filename)",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1654,7 +1895,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def deleteUserById(id: int):\n    with session_maker() as db:\n        user = db.query(User).get(id)\n        db.delete(user)\n        db.commit()\n        return True",
+        "peekOfCode": "def deleteUserById(id: int):\n    try:\n        with session_maker() as db:\n            user = db.query(User).get(id)\n            db.delete(user)\n            db.commit()\n            return True\n    except Exception as e:\n        return False",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1681,7 +1922,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.template_router",
         "description": "server.api.src.routers.template_router",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})\n@router.get(\"/athletes\", response_class=HTMLResponse)",
         "detail": "server.api.src.routers.template_router",
         "documentation": {}
     },
@@ -1690,7 +1931,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.template_router",
         "description": "server.api.src.routers.template_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})\n@router.get(\"/athletes\", response_class=HTMLResponse)\nasync def get_users(request: Request, params: Params = Depends(get_pagination_params)):",
         "detail": "server.api.src.routers.template_router",
         "documentation": {}
     },
@@ -1717,7 +1958,43 @@
         "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/users\",\n    tags=[\"Users CRUD\"],\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users():\n    page = UsersRepository.getAllUsers()\n    return page\n@router.get(\"/{id}\", dependencies=[Depends(JWTBearer())])\nasync def get_user_by_id(id: int):",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/users\",\n    tags=[\"Users CRUD\"],\n)\ncookie_params = CookieParameters()\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",",
+        "detail": "server.api.src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "cookie_params",
+        "kind": 5,
+        "importPath": "server.api.src.routers.user_router",
+        "description": "server.api.src.routers.user_router",
+        "peekOfCode": "cookie_params = CookieParameters()\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",\n    cookie_params=cookie_params,\n)\nbackend = InMemoryBackend()\nverifier = BasicVerifier(",
+        "detail": "server.api.src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "cookie",
+        "kind": 5,
+        "importPath": "server.api.src.routers.user_router",
+        "description": "server.api.src.routers.user_router",
+        "peekOfCode": "cookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",\n    cookie_params=cookie_params,\n)\nbackend = InMemoryBackend()\nverifier = BasicVerifier(\n    identifier=\"general_verifier\",",
+        "detail": "server.api.src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "backend",
+        "kind": 5,
+        "importPath": "server.api.src.routers.user_router",
+        "description": "server.api.src.routers.user_router",
+        "peekOfCode": "backend = InMemoryBackend()\nverifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=True,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)",
+        "detail": "server.api.src.routers.user_router",
+        "documentation": {}
+    },
+    {
+        "label": "verifier",
+        "kind": 5,
+        "importPath": "server.api.src.routers.user_router",
+        "description": "server.api.src.routers.user_router",
+        "peekOfCode": "verifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=True,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)\n    for user in page.items:",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -1830,6 +2107,15 @@
         "documentation": {}
     },
     {
+        "label": "BasicVerifier",
+        "kind": 6,
+        "importPath": "server.api.src.utils.basic_verifier",
+        "description": "server.api.src.utils.basic_verifier",
+        "peekOfCode": "class BasicVerifier(SessionVerifier[UUID, UserOut]):\n    def __init__(\n        self,\n        *,\n        identifier: str,\n        auto_error: bool,\n        backend: InMemoryBackend[UUID, UserOut],\n        auth_http_exception: HTTPException,\n    ):\n        self._identifier = identifier",
+        "detail": "server.api.src.utils.basic_verifier",
+        "documentation": {}
+    },
+    {
         "label": "Hasher",
         "kind": 6,
         "importPath": "server.api.src.utils.hashing",
@@ -1861,7 +2147,7 @@
         "kind": 2,
         "importPath": "server.api.main",
         "description": "server.api.main",
-        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\napp.include_router(sports_router)\napp.include_router(user_router)\napp.include_router(user_sport_router)\napp.include_router(competition_router)\napp.include_router(user_competition_router)\napp.include_router(template_router)\nif __name__ == \"__main__\":\n    import uvicorn",
+        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\n# @app.middleware(\"http\")\n# async def session_middleware(request: Request, call_next):\n#     # Исключаем страницу `/auth` из проверки сессии\n#     if request.url.path not in [\"/api/templates/auth\", \"/api/templates/registration\"] and \"session_id\" not in request.cookies:\n#         return RedirectResponse(url=\"/api/templates/auth\", status_code=302)\n#     response = await call_next(request)\n#     return response\napp.include_router(sports_router)",
         "detail": "server.api.main",
         "documentation": {}
     },
@@ -1870,7 +2156,7 @@
         "kind": 5,
         "importPath": "server.api.main",
         "description": "server.api.main",
-        "peekOfCode": "app = FastAPI(\n    title=\"Учёт результатов спортивных соревнований\", \n    description=\"Данная API предназначена для курсовой работы в рамках предмета ТПО\", \n    version=\"1.0.1\"\n)\nadd_pagination(app)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,",
+        "peekOfCode": "app = FastAPI(\n    title=\"Учёт результатов спортивных соревнований\", \n    description=\"Данная API предназначена для курсовой работы в рамках предмета ТПО\", \n    version=\"1.0.2\"\n)\nadd_pagination(app)\napp.add_middleware(\n    CORSMiddleware,\n    allow_origins=[\"*\"],\n    allow_credentials=True,",
         "detail": "server.api.main",
         "documentation": {}
     },

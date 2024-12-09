@@ -1,4 +1,4 @@
-/* styles.css */
+styles.css
 
 /* Общие стили */
 body {
@@ -86,4 +86,29 @@ h1 {
     background-color: white !important;
     color: #007bff !important;
     border: #007bff 1px solid !important;
+}
+
+.img-user-avatar {
+    max-width: 80%; 
+    width: 100%;
+}
+
+.password-field {
+    position: relative;
+    max-width: 300px; /* Ширина поля */
+}
+
+#userPassword {
+    padding-right: 45px; /* Отступ для кнопки */
+}
+
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 18px;
 }

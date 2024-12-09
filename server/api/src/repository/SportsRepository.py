@@ -6,7 +6,7 @@ from src.models.models import Sport
 
 def getAllSports(params: Params) -> Page[Sport]:
     with session_maker() as db:
-        query = db.query(Sport)
+        query = db.query(Sport).order_by(Sport.id)
         return paginate(query, params=params)
     
 def getSportById(id: int):

@@ -127,9 +127,12 @@ class UserOut(BaseModel):
     id: int
     name: str
     email: str
+    password: str
     date_birthday: Optional[datetime.date] = None
     sports_category: Optional[str] = None
     avatars: Optional[str] = None
+    
+    token: Optional[str] = None
 
     # for work pydantic with sqlalchemy model
     class Config:
@@ -187,3 +190,4 @@ class UserCompetitionCreateModel(BaseModel):
     description: str
     results: str
     position: int
+    

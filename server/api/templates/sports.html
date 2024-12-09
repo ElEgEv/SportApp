@@ -18,7 +18,7 @@
     <!-- Шапка сайта -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Мой сайт</a>
+            <a class="navbar-brand" href="/api/templates/main">Мой сайт</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
                 <span class="navbar-toggler-icon"></span>
@@ -26,13 +26,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Главная</a>
+                        <a class="nav-link" aria-current="page" href="/api/templates/main">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">О нас</a>
+                        <a class="nav-link active" href="/api/templates/sports">Виды спорта</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Контакты</a>
+                        <a class="nav-link" href="/api/templates/athletes">Спортсмены</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/about">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/profile">Личный кабинет</a>
                     </li>
                 </ul>
             </div>
@@ -161,13 +167,50 @@
             var form = sportModal.querySelector('#sportForm');
             form.onsubmit = function (e) {
                 e.preventDefault();
+
                 if (sportId) {
-                    // Логика для редактирования
-                    console.log('Редактируем вид спорта:', sportId, nameInput.value, trainerInput.value);
+                    fetch(`/api/sports/${sportId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: sportId,
+                            name: nameInput.value,
+                            trainer: trainerInput.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при обновлении вида спорта:', error);
+                    });
+
                 } else {
-                    // Логика для создания
-                    console.log('Создаем вид спорта:', nameInput.value, trainerInput.value);
+                    fetch('/api/sports/', {
+                        method: 'POST',
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: nameInput.value,
+                            trainer: trainerInput.value
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при создании вида спорта:', error);
+                    });
+
                 }
+
                 // Закрытие модального окна
                 var modal = bootstrap.Modal.getInstance(sportModal);
                 modal.hide();
@@ -177,8 +220,16 @@
         // Удаление вида спорта
         function deleteSport(id) {
             if (confirm('Вы уверены, что хотите удалить этот вид спорта?')) {
-                console.log('Удаляем вид спорта с ID:', id);
-                // Добавьте логику для удаления, например, с использованием fetch или XMLHttpRequest
+                fetch(`/api/sports/${id}`, {
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Ошибка при удалении вида спорта:', error);
+                });
             }
         }
     </script>

@@ -2,7 +2,7 @@ import os
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from fastapi import UploadFile
-from fastapi_pagination import Page
+from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from src.database.database import session_maker
 from src.models.models import User, UserCreateModel, UserLogin
@@ -11,10 +11,10 @@ from src.utils.hashing import Hasher
 from src.utils.auth_handler import sign_jwt
 
 
-def getAllUsers() -> Page[User]:
+def getAllUsers(params: Params) -> Page[User]:
     with session_maker() as db:
-        query = db.query(User)
-        return paginate(query)
+        query = db.query(User).order_by(User.id)
+        return paginate(query, params=params)
     
 def checkUser(user: UserLogin):
     with session_maker() as db:
@@ -26,7 +26,7 @@ def checkUser(user: UserLogin):
         is_user = Hasher.verify_password(user.password, user_db.password)
         
         if is_user:
-            return user
+            return user_db
         
         return False
     
@@ -84,16 +84,20 @@ def updateUser(id: int, user: UserCreateModel, avatar: UploadFile | None):
         user_db.date_birthday = user.date_birthday
         user_db.sports_category = user.sports_category
 
-        current_file_name = upload_file('users/avatars', avatar, avatar.filename)
+        if avatar:
+            current_file_name = upload_file('users/avatars', avatar, avatar.filename)
         
-        user_db.avatars = current_file_name
+            user_db.avatars = current_file_name
             
         db.commit()
         return user
     
 def deleteUserById(id: int):
-    with session_maker() as db:
-        user = db.query(User).get(id)
-        db.delete(user)
-        db.commit()
-        return True
+    try:
+        with session_maker() as db:
+            user = db.query(User).get(id)
+            db.delete(user)
+            db.commit()
+            return True
+    except Exception as e:
+        return False
