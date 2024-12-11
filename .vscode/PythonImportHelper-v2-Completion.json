@@ -144,6 +144,14 @@
         "documentation": {}
     },
     {
+        "label": "func",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "select",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -763,11 +771,43 @@
         "documentation": {}
     },
     {
-        "label": "upload_file",
-        "importPath": "src.utils.FileOperator",
-        "description": "src.utils.FileOperator",
+        "label": "SportsRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
         "isExtraImport": true,
-        "detail": "src.utils.FileOperator",
+        "detail": "src.repository",
+        "documentation": {}
+    },
+    {
+        "label": "CompetitionRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
+        "isExtraImport": true,
+        "detail": "src.repository",
+        "documentation": {}
+    },
+    {
+        "label": "SportsRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
+        "isExtraImport": true,
+        "detail": "src.repository",
+        "documentation": {}
+    },
+    {
+        "label": "CompetitionRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
+        "isExtraImport": true,
+        "detail": "src.repository",
+        "documentation": {}
+    },
+    {
+        "label": "UsersRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
+        "isExtraImport": true,
+        "detail": "src.repository",
         "documentation": {}
     },
     {
@@ -779,7 +819,7 @@
         "documentation": {}
     },
     {
-        "label": "get_file_format",
+        "label": "upload_file",
         "importPath": "src.utils.FileOperator",
         "description": "src.utils.FileOperator",
         "isExtraImport": true,
@@ -1112,38 +1152,6 @@
         "description": "src.utils.auth_handler",
         "isExtraImport": true,
         "detail": "src.utils.auth_handler",
-        "documentation": {}
-    },
-    {
-        "label": "CompetitionRepository",
-        "importPath": "src.repository",
-        "description": "src.repository",
-        "isExtraImport": true,
-        "detail": "src.repository",
-        "documentation": {}
-    },
-    {
-        "label": "SportsRepository",
-        "importPath": "src.repository",
-        "description": "src.repository",
-        "isExtraImport": true,
-        "detail": "src.repository",
-        "documentation": {}
-    },
-    {
-        "label": "CompetitionRepository",
-        "importPath": "src.repository",
-        "description": "src.repository",
-        "isExtraImport": true,
-        "detail": "src.repository",
-        "documentation": {}
-    },
-    {
-        "label": "UsersRepository",
-        "importPath": "src.repository",
-        "description": "src.repository",
-        "isExtraImport": true,
-        "detail": "src.repository",
         "documentation": {}
     },
     {
@@ -1778,7 +1786,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.CompetitionRepository",
         "description": "server.api.src.repository.CompetitionRepository",
-        "peekOfCode": "def getAllCompetition(params: Params) -> Page[Competition]:\n    with session_maker() as db:\n        query = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport)\n            )\n            .order_by(Competition.id)\n        )\n        return paginate(query, params=params)",
+        "peekOfCode": "def getAllCompetition(params: Params, sport_id: int = 0) -> Page[Competition]:\n    with session_maker() as db:\n        if sport_id == 0:\n            query = (\n                db.query(Competition)\n                .options(\n                    joinedload(Competition.sport)\n                )\n                .order_by(Competition.id)\n            )",
         "detail": "server.api.src.repository.CompetitionRepository",
         "documentation": {}
     },
@@ -1788,6 +1796,33 @@
         "importPath": "server.api.src.repository.CompetitionRepository",
         "description": "server.api.src.repository.CompetitionRepository",
         "peekOfCode": "def getCompetitionById(id: int):\n    with session_maker() as db:\n        competition = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport),\n                joinedload(Competition.participants)\n            )\n            .get(id)\n        )",
+        "detail": "server.api.src.repository.CompetitionRepository",
+        "documentation": {}
+    },
+    {
+        "label": "getBestResultByPeriod",
+        "kind": 2,
+        "importPath": "server.api.src.repository.CompetitionRepository",
+        "description": "server.api.src.repository.CompetitionRepository",
+        "peekOfCode": "def getBestResultByPeriod(date_start: datetime, date_end:datetime, sport_id: int):\n    with session_maker() as db:\n        competitions = (db.query(Competition.id)\n                .filter(Competition.date >= date_start, Competition.date <= date_end, Competition.sport_id == sport_id)\n                .order_by(Competition.date)\n                .all()\n            )\n        sport = SportsRepository.getSportById(sport_id)\n        # сюда название вида спорта\n        headers = [\"#\", sport.name]",
+        "detail": "server.api.src.repository.CompetitionRepository",
+        "documentation": {}
+    },
+    {
+        "label": "getMiddleResultByPeriod",
+        "kind": 2,
+        "importPath": "server.api.src.repository.CompetitionRepository",
+        "description": "server.api.src.repository.CompetitionRepository",
+        "peekOfCode": "def getMiddleResultByPeriod(date_start, date_end, sport_id):\n    with session_maker() as db:\n        competitions = (db.query(Competition.id)\n                .filter(Competition.date >= date_start, Competition.date <= date_end, Competition.sport_id == sport_id)\n                .order_by(Competition.date)\n                .all()\n            )\n        sport = SportsRepository.getSportById(sport_id)\n        headers = [\"#\", sport.name]\n        data_arr = []",
+        "detail": "server.api.src.repository.CompetitionRepository",
+        "documentation": {}
+    },
+    {
+        "label": "getCompetitionsBySportId",
+        "kind": 2,
+        "importPath": "server.api.src.repository.CompetitionRepository",
+        "description": "server.api.src.repository.CompetitionRepository",
+        "peekOfCode": "def getCompetitionsBySportId(sport_id: int):\n    with session_maker() as db:\n        return db.query(Competition).filter(Competition.sport_id == sport_id).all()\ndef createCompetition(competition: CompetitionCreateModel, image: UploadFile):\n    current_file_name = upload_file('competitions/images', image, image.filename)\n    db_competition = Competition(**competition.model_dump())\n    db_competition.image = current_file_name\n    with session_maker() as db:\n        db.add(db_competition)\n        db.commit()",
         "detail": "server.api.src.repository.CompetitionRepository",
         "documentation": {}
     },
@@ -1931,7 +1966,16 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def getAllUsers(params: Params) -> Page[User]:\n    with session_maker() as db:\n        query = db.query(User).order_by(User.id)\n        return paginate(query, params=params)\ndef checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)",
+        "peekOfCode": "def getAllUsers(params: Params) -> Page[User]:\n    with session_maker() as db:\n        query = db.query(User).order_by(User.id)\n        return paginate(query, params=params)\ndef getAllUsersWithoutPagination() -> list[User]:\n    with session_maker() as db:\n        query = db.query(User).order_by(User.id)\n        return query.all()\ndef checkUser(user: UserLogin):    \n    with session_maker() as db:",
+        "detail": "server.api.src.repository.UsersRepository",
+        "documentation": {}
+    },
+    {
+        "label": "getAllUsersWithoutPagination",
+        "kind": 2,
+        "importPath": "server.api.src.repository.UsersRepository",
+        "description": "server.api.src.repository.UsersRepository",
+        "peekOfCode": "def getAllUsersWithoutPagination() -> list[User]:\n    with session_maker() as db:\n        query = db.query(User).order_by(User.id)\n        return query.all()\ndef checkUser(user: UserLogin):    \n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1940,7 +1984,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def checkUser(user: UserLogin):\n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)\n        if is_user:\n            return user_db\n        return False\ndef getUserById(id: int):",
+        "peekOfCode": "def checkUser(user: UserLogin):    \n    with session_maker() as db:\n        user_db = db.query(User).filter(User.email == user.email).first()\n        if not user_db:\n            return False\n        is_user = Hasher.verify_password(user.password, user_db.password)\n        if is_user:\n            return user_db\n        return False\ndef getUserById(id: int):",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -2012,7 +2056,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.template_router",
         "description": "server.api.src.routers.template_router",
-        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})\n@router.get(\"/athletes\", response_class=HTMLResponse)",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse, dependencies=[Depends(cookie)])\nasync def get_sports(request: Request, \n                    params: Params = Depends(get_pagination_params),\n                    session_data: UserOut = Depends(verifier)\n                ):",
         "detail": "server.api.src.routers.template_router",
         "documentation": {}
     },
@@ -2021,7 +2065,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.template_router",
         "description": "server.api.src.routers.template_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse)\nasync def get_sports(request: Request, params: Params = Depends(get_pagination_params)):\n    page_data = SportsRepository.getAllSports(params)\n    return templates.TemplateResponse(\"sports.html\", {\"request\": request, \"page\": page_data})\n@router.get(\"/athletes\", response_class=HTMLResponse)\nasync def get_users(request: Request, params: Params = Depends(get_pagination_params)):",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/templates\",\n    tags=[\"Tamplates route\"],\n)\n@router.get(\"/sports\", response_class=HTMLResponse, dependencies=[Depends(cookie)])\nasync def get_sports(request: Request, \n                    params: Params = Depends(get_pagination_params),\n                    session_data: UserOut = Depends(verifier)\n                ):\n    try:",
         "detail": "server.api.src.routers.template_router",
         "documentation": {}
     },

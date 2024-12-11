@@ -30,6 +30,9 @@
                         <a class="nav-link active" href="/api/templates/competitions">Соревнования</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/competition_result">Результаты выступлений</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/api/templates/sports">Виды спорта</a>
                     </li>
                     <li class="nav-item">
@@ -49,8 +52,81 @@
         <div class="table-container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="my-4" style="font-size: 1.5rem; margin: 0;">Список соревнований</h1>
-                <button id="createcompetitionButton" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#competitionModal">Создать соревнование</button>
+                <button id="createcompetitionButton" 
+                    class="btn btn-success btn-sm" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#competitionModal"
+                >
+                    Создать соревнование
+                </button>
             </div>
+
+            <form class="d-flex justify-content-between align-items-center mb-4" method="get">
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <div class="container">
+                    <div class="form-check">
+                        <input class="form-check-input" 
+                            type="checkbox" 
+                            name="getBetter" 
+                            value="Y" 
+                            id="flexCheckDefault"
+                            {% if getBetter == 'Y' %} checked {% endif %}
+                        >
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Отчёт о лучших выступлениях за период
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" 
+                            type="checkbox" 
+                            name="getMiddle" 
+                            value="Y" 
+                            id="flexCheckChecked"
+                            {% if getMiddle == 'Y' %} checked {% endif %}
+                        >
+                        <label class="form-check-label" for="flexCheckChecked">
+                            Динамика среднего уровня выступлений
+                        </label>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="form-check d-flex">
+                        <label for="sportIdForReport" class="form-label">Вид спорта</label>
+                        <select id="sportIdForReport" name="sport_id" class="form-select" required>
+                            <option value="0">Выберите вид спорта</option>
+                            {% for sport in sports %}
+                                <option value="{{ sport.id }}" {% if sport.id == sport_id %}selected{% endif %}>{{ sport.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-check d-flex">
+                        <input type="date" id="date_start" name="date_start" class="form-control" title="Дата начала периода" value="{{ date_start }}" required>
+                    </div>
+                    <div class="form-check d-flex">
+                        <input type="date" id="date_end" name="date_end" class="form-control" title="Дата окончания периода" value="{{ date_end }}" required>
+                    </div>
+                </div>
+
+                <input id="searchButton" type="submit" value="Сформировать статистику" class="btn btn-primary">
+            </form>
+
+            {% if getBetter == 'Y' %}
+            <div class="container">
+                <div id="best_diagram_container" style="height: 400px;"></div>
+            </div>
+            {% endif %}
+
+            {% if getMiddle == 'Y' %}
+            <div class="container">
+                <div id="middle_diagram_container" style="height: 400px;"></div>
+            </div>
+            {% endif %}
 
             <!-- Таблица для отображения данных -->
             <table class="table table-bordered table-striped">
@@ -67,55 +143,59 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for competition in page.items %}
-                    <tr>
-                        <td>{{ competition.id }}</td>
-                        <td>{{ competition.sport_id }}</td>
-                        <td>{{ competition.name }}</td>
-                        <td>{{ competition.description }}</td>
-                        <td>{{ competition.chief_judge }}</td>
-                        <td>{{ competition.date }}</td>
-                        <td><img src="{{ competition.image }}" alt="{{ competition.name }}" class="img-user-avatar" /></td>
-                        <td class="text-center">
-                            <!-- Иконки для редактирования и удаления -->
-                            <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" 
-                                data-bs-target="#competitionModal" 
-                                data-id="{{ competition.id }}" 
-                                data-name="{{ competition.name }}" 
-                                data-sport_id="{{ competition.sport_id }}" 
-                                data-description="{{ competition.description }}"
-                                data-chief-judge="{{ competition.chief_judge }}" 
-                                data-date="{{ competition.date }}"
-                                data-image="{{ competition.image }}"
-                            >
-                                <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
-                            </button>
-                            <button class="btn btn-danger btn-sm" onclick="deletecompetition({{ competition.id }})">
-                                <i class="fas fa-trash"></i> <!-- Иконка удаления -->
-                            </button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                    {% if page %}
+                        {% for competition in page.items %}
+                        <tr>
+                            <td>{{ competition.id }}</td>
+                            <td>{{ competition.sport_id }}</td>
+                            <td>{{ competition.name }}</td>
+                            <td>{{ competition.description }}</td>
+                            <td>{{ competition.chief_judge }}</td>
+                            <td>{{ competition.date }}</td>
+                            <td><img src="{{ competition.image }}" alt="{{ competition.name }}" class="img-user-avatar" /></td>
+                            <td class="text-center">
+                                <!-- Иконки для редактирования и удаления -->
+                                <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" 
+                                    data-bs-target="#competitionModal" 
+                                    data-id="{{ competition.id }}" 
+                                    data-name="{{ competition.name }}" 
+                                    data-sport_id="{{ competition.sport_id }}" 
+                                    data-description="{{ competition.description }}"
+                                    data-chief-judge="{{ competition.chief_judge }}" 
+                                    data-date="{{ competition.date }}"
+                                    data-image="{{ competition.image }}"
+                                >
+                                    <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deletecompetition({{ competition.id }})">
+                                    <i class="fas fa-trash"></i> <!-- Иконка удаления -->
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                 </tbody>
             </table>
         </div>
 
-        <!-- Навигация по страницам -->
-        <div class="pagination">
-            {% if page.page > 1 %}
-                <a href="/api/templates/competitions?page={{ page.page - 1 }}&size={{ page.size }}" class="page-item">«</a>
-            {% endif %}
+        {% if page %}
+            <!-- Навигация по страницам -->
+            <div class="pagination">
+                {% if page.page > 1 %}
+                    <a href="/api/templates/competitions?page={{ page.page - 1 }}&size={{ page.size }}&sport_id={{ sport_id }}" class="page-item">«</a>
+                {% endif %}
 
-            <!-- Отображаем страницы -->
-            {% for p in range(1, page.pages + 1) %}
-                <a href="/api/templates/competitions?page={{ p }}&size={{ page.size }}"
-                    class="page-item {% if p == page.page %} active {% endif %}">{{ p }}</a>
-            {% endfor %}
+                <!-- Отображаем страницы -->
+                {% for p in range(1, page.pages + 1) %}
+                    <a href="/api/templates/competitions?page={{ p }}&size={{ page.size }}&sport_id={{ sport_id }}"
+                        class="page-item {% if p == page.page %} active {% endif %}">{{ p }}</a>
+                {% endfor %}
 
-            {% if page.page < page.pages %} <a href="/api/templates/competitions?page={{ page.page + 1 }}&size={{ page.size }}" class="page-item">
-                »</a>
-            {% endif %}
-        </div>
+                {% if page.page < page.pages %} <a href="/api/templates/competitions?page={{ page.page + 1 }}&size={{ page.size }}&sport_id={{ sport_id }}" class="page-item">
+                    »</a>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 
     <!-- Модальное окно для создания/редактирования пользователей -->
@@ -132,6 +212,7 @@
                         <div class="mb-3">
                             <label for="sportId" class="form-label">Вид спорта</label>
                             <select id="sportId" name="sport_id" class="form-select" required>
+                                <option value="">Выберите вид спорта</option>
                                 {% for sport in sports %}
                                     <option value="{{ sport.id }}">{{ sport.name }}</option>
                                 {% endfor %}
@@ -181,6 +262,7 @@
 
     <!-- Подключаем Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.anychart.com/js/latest/anychart-bundle.min.js"></script>
 
     <script>
         // Открытие модального окна для редактирования
@@ -251,7 +333,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // window.location.reload();
+                        window.location.reload();
                     })
                     .catch(error => {
                         console.error('Ошибка при обновлении соревнования:', error);
@@ -278,8 +360,7 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        
-                        //console.log(data);
+                        window.location.reload();
                     })
                     .catch(error => {
                         console.error('Ошибка при создании соревнования:', error);
@@ -327,6 +408,46 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        {% if dataBestForGraph %}
+            var data_for_graphics = {
+                header: ['{{ dataBestForGraph['header'][0] }}', '{{ dataBestForGraph['header'][1] }}'],
+                rows: [
+                    {% for row in dataBestForGraph['rows'] %}
+                        ['{{ row[0] }}', {{ row[1] }}],
+                    {% endfor %}
+                ]
+            }
+
+            // work with graphics
+            anychart.onDocumentLoad(function() {
+                var chart = anychart.line()
+                chart.data(data_for_graphics);
+                chart.title("График лучших выступлений за период");
+                chart.legend(true);
+                chart.container("best_diagram_container").draw();
+            });
+        {% endif %}
+
+        {% if dateMiddleForGraph %}
+            var data_for_graphics = {
+                header: ['{{ dateMiddleForGraph['header'][0] }}', '{{ dateMiddleForGraph['header'][1] }}'],
+                rows: [
+                    {% for row in dateMiddleForGraph['rows'] %}
+                        ['{{ row[0] }}', {{ row[1] }}],
+                    {% endfor %}
+                ]
+            }
+
+            // work with graphics
+            anychart.onDocumentLoad(function() {
+                var chart = anychart.line()
+                chart.data(data_for_graphics);
+                chart.title("График средней динамики выступлений за период");
+                chart.legend(true);
+                chart.container("middle_diagram_container").draw();
+            });
+        {% endif %}
 
     </script>
 

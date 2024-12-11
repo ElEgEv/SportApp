@@ -33,7 +33,7 @@ async def create_user_competition(user_id: Annotated[int, Form()],
     
     return createUserCompetition(userCompetition)
 
-@router.put("/")
+@router.put("/update")
 async def update_user_competition(id: Annotated[int, Form()],
                                     user_id: Annotated[int, Form()],
                                     competition_id: Annotated[int, Form()],
@@ -53,6 +53,9 @@ async def update_user_competition(id: Annotated[int, Form()],
     
     return updateUserCompetition(id, userCompetition)
 
-@router.delete("/")
-async def remove_user_competition(id: Annotated[int, Form()]):
+@router.delete("/{id}")
+async def remove_user_competition(id: int):
+    if id == None:
+        raise HTTPException(status_code=404, detail="User Competition not found")
+    
     return removeUserCompetition(id)

@@ -30,6 +30,9 @@
                         <a class="nav-link" href="/api/templates/competitions">Соревнования</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/competition_result">Результаты выступлений</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/api/templates/sports">Виды спорта</a>
                     </li>
                     <li class="nav-item">
@@ -278,8 +281,8 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        //window.location.reload();
-                        console.log(data);
+                        window.location.reload();
+                        //console.log(data);
                     })
                     .catch(error => {
                         console.error('Ошибка при создании спортсмена:', error);

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список соревнований</title>
+
+    <link rel="stylesheet" href="/public/styles/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Шапка сайта -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/api/templates/main">Мой сайт</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/api/templates/main">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/competitions">Соревнования</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/api/templates/participant_result">Результаты выступлений</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/sports">Виды спорта</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/athletes">Спортсмены</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/profile">Личный кабинет</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Контейнер для контента -->
+    <div class="container">
+        <!-- Заголовок и кнопка создания вида спорта -->
+        <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="my-4" style="font-size: 1.5rem; margin: 0;">Список результатов выступлений</h1>
+
+                {% if competition_id %}
+                    <button id="createparticipantButton" 
+                        class="btn btn-success btn-sm" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#participantModal" 
+                        data-competition_id="{{ competition.id }}"
+                    >
+                        Создать запись о результатe
+                    </button>
+                {% endif %}
+            </div>
+            
+            <form class="d-flex justify-content-between align-items-center mb-4" method="get"`>
+                <div class="d-flex">
+                    <div>
+                        <label for="sportChooiceId" class="form-label me-2">Вид спорта:</label>
+                        <select id="sportChooiceId" name="sport_id" class="form-select me-2" required>
+                            <option value="" disabled selected>Выберите вид спорта</option>
+                            {% for sport in sports %}
+                                <option value="{{ sport.id }}" {% if sport.id == sport_id %}selected{% endif %}>{{ sport.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% if competitions %}
+                        <div>
+                            <label for="competitionChooiceId" class="form-label ms-2">Соревнование:</label>
+                            <select id="competitionChooiceId" name="competition_id" class="form-select ms-2" required>
+                                <option value="" disabled selected>Выберите соревнование</option>
+                                {% for _competition in competitions %}
+                                    <option value="{{ _competition.id }}" {% if _competition.id == competition_id %}selected{% endif %}>{{ _competition.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <input id="searchButton" type="submit" value="Поиск" class="btn btn-primary">
+            </form>
+
+            <!-- Таблица для отображения данных -->
+            {% if competition %}
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Описание</th>
+                            <th>Спортсмен(ка)</th>
+                            <th>Стартовая группа</th>
+                            <th>Место</th>
+                            <th>Результат</th>
+                            <th class="text-center">Действия</th> <!-- Новая колонка для действий -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for participant in competition.participants %}
+                        <tr>
+                            <td>{{ participant.id }}</td>
+                            <td>{{ participant.description }}</td>
+                            <td>{{ participant.user_name }}</td>
+                            <td>{{ participant.start_group }}</td>
+                            <td>{{ participant.position }}</td>
+                            <td>{{ participant.results }}</td>
+                            <td class="text-center">
+                                <!-- Иконки для редактирования и удаления -->
+                                <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" 
+                                    data-bs-target="#participantModal" 
+                                    data-id="{{ participant.id }}" 
+                                    data-description="{{ participant.description }}" 
+                                    data-user_id="{{ participant.user_id }}" 
+                                    data-start_group="{{ participant.start_group }}"
+                                    data-position="{{ participant.position }}" 
+                                    data-results="{{ participant.results }}"
+                                    data-competition_id="{{ participant.competition_id }}"
+                                    data-user-name="{{ participant.user_name }}"
+                                >
+                                    <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteParticipant({{ participant.id }})">
+                                    <i class="fas fa-trash"></i> <!-- Иконка удаления -->
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <img src="http://localhost:8000/public/competitions/images/default.jpg" alt="Логотип" class="img-fluid" style="max-width: 100%;">
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Модальное окно для создания/редактирования пользователей -->
+    <div class="modal fade" id="participantModal" tabindex="-1" aria-labelledby="participantModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="participantModalLabel">Добавить/Редактировать результат</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="participantForm" action="/update" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="participantId" name="id">
+                        <input type="hidden" id="participantCompetitionId" name="competition_id">
+
+                        <div class="mb-3">
+                            <label for="userId" class="form-label">Спортсмен(ка)</label>
+                            <select id="userId" name="user_id" class="form-select" required>
+                                {% for user in users %}
+                                    <option value="{{ user.id }}">{{ user.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="participantDescription" class="form-label">Описание</label>
+                            <textarea id="participantDescription" name="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="participantStartGroup" class="form-label">Стартовая группа</label>
+                            <input type="text" id="participantStartGroup" name="start_group" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="participantResults" class="form-label">Результат</label>
+                            <input type="text" id="participantResults" name="results" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="participantPosition" class="form-label">Место</label>
+                            <input type="еуче" id="participantPosition" name="position" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="submit" form="participantForm" class="btn btn-primary" style="width: 15%;">Сохранить</button>
+                    <button type="button" class="btn btn-secondary me-2" style="width: 15%;" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Футер сайта -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Мой сайт. Все права защищены.</p>
+            <p>Разработано командой <a href="/api/templates/main">Мои разработчики</a></p>
+        </div>
+    </footer>
+
+    <!-- Подключаем Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Открытие модального окна для редактирования
+        var participantModal = document.getElementById('participantModal')
+        participantModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var modalTitle = participantModal.querySelector('.modal-title');
+
+            var participantId = button.getAttribute('data-id');
+            var participantUserId = button.getAttribute('data-user_id');
+            var participantCompetitionId = button.getAttribute('data-competition_id');
+
+            var participantDescription = button.getAttribute('data-description');
+            var participantStartGroup = button.getAttribute('data-start_group');
+            var participantPosition = button.getAttribute('data-position');
+            var participantResults = button.getAttribute('data-results');
+
+            var userIdInput = participantModal.querySelector('#userId');
+            var descriptionInput = participantModal.querySelector('#participantDescription');
+            var startGroupInput = participantModal.querySelector('#participantStartGroup');
+            var positionInput = participantModal.querySelector('#participantPosition');
+            var resultsInput = participantModal.querySelector('#participantResults');
+
+            if (participantId) {
+                modalTitle.textContent = 'Редактирование результата';
+                userIdInput.value = participantUserId;
+                descriptionInput.value = participantDescription;
+                startGroupInput.value = participantStartGroup;
+                positionInput.value = participantPosition;
+                resultsInput.value = participantResults;
+            } else {
+                modalTitle.textContent = 'Создание реультата';
+                userIdInput.value = 0;
+                descriptionInput.value = '';
+                startGroupInput.value = '';
+                positionInput.value = '';
+                resultsInput.value = '';
+            }
+
+            // Обработка отправки формы
+            var form = participantModal.querySelector('#participantForm');
+            form.onsubmit = function (e) {
+                e.preventDefault();
+
+                if (participantId) {
+                    const formData = new FormData();
+                    formData.append('id', participantId);
+                    formData.append('user_id', userIdInput.value);
+                    formData.append('description', descriptionInput.value);
+                    formData.append('start_group', startGroupInput.value);
+                    formData.append('position', positionInput.value);
+                    formData.append('results', resultsInput.value);
+                    formData.append('competition_id', participantCompetitionId);
+
+                    fetch(`/api/user_competition/update`, {
+                        method: 'PUT',
+                        headers: {
+                            'accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при обновлении результата:', error);
+                    });
+
+                } else {
+                    const formData = new FormData();
+                    formData.append('user_id', userIdInput.value);
+                    formData.append('description', descriptionInput.value);
+                    formData.append('start_group', startGroupInput.value);
+                    formData.append('position', positionInput.value);
+                    formData.append('results', resultsInput.value);
+                    formData.append('competition_id', participantCompetitionId);
+
+                    fetch('/api/user_competition/', {
+                        method: 'POST',
+                        headers: {
+                            'accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при создании результата:', error);
+                    });
+
+                }
+
+                // Закрытие модального окна
+                var modal = bootstrap.Modal.getInstance(participantModal);
+                modal.hide();
+            }
+        });
+
+        function deleteParticipant(id) {
+            if (confirm('Вы уверены, что хотите удалить этот результат?')) {
+                fetch(`/api/user_competition/${id}`, {
+                    headers: {
+                        'accept': 'application/json',
+                    },
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Ошибка при удалении результата:', error);
+                });
+            }
+        }
+
+        var selectSport = document.getElementById('sportChooiceId');
+        var selectCompetition = document.getElementById('competitionChooiceId');
+        var buttonSearch = document.getElementById('searchButton');
+
+        selectSport.addEventListener('change', function() {
+            buttonSearch.click();
+        })
+
+        selectCompetition.addEventListener('change', function() {
+            buttonSearch.click();
+        })
+
+    </script>
+
+</body>
+
+</html>

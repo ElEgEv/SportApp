@@ -9,7 +9,6 @@ from src.models.models import User, UserCreateModel, UserLogin
 from src.utils.FileOperator import upload_file
 from src.utils.hashing import Hasher
 from src.utils.auth_handler import sign_jwt
-from src.utils.FileOperator import get_file_format
 
 
 def getAllUsers(params: Params) -> Page[User]:
@@ -17,7 +16,12 @@ def getAllUsers(params: Params) -> Page[User]:
         query = db.query(User).order_by(User.id)
         return paginate(query, params=params)
     
-def checkUser(user: UserLogin):
+def getAllUsersWithoutPagination() -> list[User]:
+    with session_maker() as db:
+        query = db.query(User).order_by(User.id)
+        return query.all()
+    
+def checkUser(user: UserLogin):    
     with session_maker() as db:
         user_db = db.query(User).filter(User.email == user.email).first()
         
