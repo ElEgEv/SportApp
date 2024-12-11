@@ -69,8 +69,6 @@ def getBestResultByPeriod(date_start: datetime, date_end:datetime, sport_id: int
         for competition_id in competitions:
             competition: Competition = getCompetitionById(competition_id[0])
             
-            print(competition.__dict__)
-            
             if len(competition.participants) > 0:
                 support_arr = []
                 
@@ -101,8 +99,6 @@ def getMiddleResultByPeriod(date_start, date_end, sport_id):
         
         for competition_id in competitions:
             competition: Competition = getCompetitionById(competition_id[0])
-            
-            print(competition.__dict__)
             
             if len(competition.participants) > 0:
                 support_arr = []
