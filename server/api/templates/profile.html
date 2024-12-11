@@ -29,13 +29,13 @@
                         <a class="nav-link" href="/api/templates/main">Главная</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/competitions">Соревнования</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/api/templates/sports">Виды спорта</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/api/templates/athletes">Спортсмены</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/api/templates/about">О нас</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/api/templates/profile">Личный кабинет</a>
@@ -58,6 +58,8 @@
             <!-- Колонка с формой редактирования данных -->
             <div class="col-md-6">
                 <form action="/api/users/update?id={{ user.id }}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="id" value="{{ user.id }}">
+
                     <!-- Имя -->
                     <div class="mb-3">
                         <label for="name" class="form-label">Имя</label>
@@ -93,16 +95,20 @@
 
                     <!-- Аватар -->
                     <div id="fileInputContainer" style="display: none;" class="mt-3">
-
                         <label for="avatar" class="form-label">Аватар</label>
                         <input type="file" class="form-control" id="avatar" name="avatar" previewAvatar(event)>
                     </div>
 
                     <!-- Кнопка отправки формы -->
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        <button type="submit" class="btn btn-primary m-1">Сохранить изменения</button>
                     </div>
                 </form>
+                <div class="d-flex justify-content-end">
+                    <form action="/api/users/logout" method="post">
+                        <button type="submit" class="btn btn-primary m-1">Выйти</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -37,5 +37,6 @@ class BasicVerifier(SessionVerifier[UUID, UserOut]):
         return self._auth_http_exception
 
     def verify_session(self, model: UserOut) -> bool:
-        """If the session exists, it is valid"""
+        if model is None:
+            raise HTTPException(status_code=302, detail="Invalid session")
         return True

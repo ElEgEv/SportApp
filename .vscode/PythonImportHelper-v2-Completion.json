@@ -331,6 +331,14 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "UploadFile",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -419,6 +427,14 @@
         "documentation": {}
     },
     {
+        "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
         "label": "Request",
         "importPath": "fastapi",
         "description": "fastapi",
@@ -476,6 +492,14 @@
     },
     {
         "label": "HTTPException",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
         "importPath": "fastapi",
         "description": "fastapi",
         "isExtraImport": true,
@@ -603,14 +627,6 @@
         "documentation": {}
     },
     {
-        "label": "Page",
-        "importPath": "fastapi_pagination",
-        "description": "fastapi_pagination",
-        "isExtraImport": true,
-        "detail": "fastapi_pagination",
-        "documentation": {}
-    },
-    {
         "label": "Params",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
@@ -636,6 +652,30 @@
     },
     {
         "label": "Page",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Page",
+        "importPath": "fastapi_pagination",
+        "description": "fastapi_pagination",
+        "isExtraImport": true,
+        "detail": "fastapi_pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Params",
         "importPath": "fastapi_pagination",
         "description": "fastapi_pagination",
         "isExtraImport": true,
@@ -755,6 +795,14 @@
         "documentation": {}
     },
     {
+        "label": "get_file_format",
+        "importPath": "src.utils.FileOperator",
+        "description": "src.utils.FileOperator",
+        "isExtraImport": true,
+        "detail": "src.utils.FileOperator",
+        "documentation": {}
+    },
+    {
         "label": "Competition",
         "importPath": "src.models.models",
         "description": "src.models.models",
@@ -764,6 +812,14 @@
     },
     {
         "label": "CompetitionCreateModel",
+        "importPath": "src.models.models",
+        "description": "src.models.models",
+        "isExtraImport": true,
+        "detail": "src.models.models",
+        "documentation": {}
+    },
+    {
+        "label": "Sport",
         "importPath": "src.models.models",
         "description": "src.models.models",
         "isExtraImport": true,
@@ -1075,6 +1131,14 @@
         "documentation": {}
     },
     {
+        "label": "CompetitionRepository",
+        "importPath": "src.repository",
+        "description": "src.repository",
+        "isExtraImport": true,
+        "detail": "src.repository",
+        "documentation": {}
+    },
+    {
         "label": "UsersRepository",
         "importPath": "src.repository",
         "description": "src.repository",
@@ -1120,6 +1184,14 @@
         "description": "fastapi.responses",
         "isExtraImport": true,
         "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "Jinja2Templates",
+        "importPath": "fastapi.templating",
+        "description": "fastapi.templating",
+        "isExtraImport": true,
+        "detail": "fastapi.templating",
         "documentation": {}
     },
     {
@@ -1706,7 +1778,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.CompetitionRepository",
         "description": "server.api.src.repository.CompetitionRepository",
-        "peekOfCode": "def getAllCompetition() -> Page[Competition]:\n    with session_maker() as db:\n        query = db.query(Competition)\n        return paginate(query)\ndef getCompetitionById(id: int):\n    with session_maker() as db:\n        competition = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport),",
+        "peekOfCode": "def getAllCompetition(params: Params) -> Page[Competition]:\n    with session_maker() as db:\n        query = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport)\n            )\n            .order_by(Competition.id)\n        )\n        return paginate(query, params=params)",
         "detail": "server.api.src.repository.CompetitionRepository",
         "documentation": {}
     },
@@ -1715,7 +1787,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.CompetitionRepository",
         "description": "server.api.src.repository.CompetitionRepository",
-        "peekOfCode": "def getCompetitionById(id: int):\n    with session_maker() as db:\n        competition = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport),\n                joinedload(Competition.participants)\n            )\n            .get(id))\n        if competition:",
+        "peekOfCode": "def getCompetitionById(id: int):\n    with session_maker() as db:\n        competition = (\n            db.query(Competition)\n            .options(\n                joinedload(Competition.sport),\n                joinedload(Competition.participants)\n            )\n            .get(id)\n        )",
         "detail": "server.api.src.repository.CompetitionRepository",
         "documentation": {}
     },
@@ -1733,7 +1805,7 @@
         "kind": 2,
         "importPath": "server.api.src.repository.CompetitionRepository",
         "description": "server.api.src.repository.CompetitionRepository",
-        "peekOfCode": "def updateCompetition(id: int, competition: Competition, image: UploadFile):\n    with session_maker() as db:\n        competition_db = db.query(Competition).get(id)\n        if not competition_db:\n            raise HTTPException(status_code=404, detail=\"Competition not found\")\n        competition_db.name = competition.name\n        competition_db.description = competition.description\n        competition_db.chief_judge = competition.chief_judge\n        competition_db.date = competition.date\n        current_file_name = upload_file('competitions/images', image, image.filename)",
+        "peekOfCode": "def updateCompetition(id: int, competition: Competition, image: UploadFile):\n    with session_maker() as db:\n        competition_db = db.query(Competition).get(id)\n        if not competition_db:\n            raise HTTPException(status_code=404, detail=\"Competition not found\")\n        competition_db.name = competition.name\n        competition_db.description = competition.description\n        competition_db.chief_judge = competition.chief_judge\n        competition_db.date = competition.date\n        competition_db.sport_id = competition.sport_id",
         "detail": "server.api.src.repository.CompetitionRepository",
         "documentation": {}
     },
@@ -1751,7 +1823,16 @@
         "kind": 2,
         "importPath": "server.api.src.repository.SportsRepository",
         "description": "server.api.src.repository.SportsRepository",
-        "peekOfCode": "def getAllSports(params: Params) -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport).order_by(Sport.id)\n        return paginate(query, params=params)\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
+        "peekOfCode": "def getAllSports(params: Params) -> Page[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport).order_by(Sport.id)\n        return paginate(query, params=params)\ndef getAllSportsWithoutPagination() -> list[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport).order_by(Sport.id)\n        return query.all()\ndef getSportById(id: int):\n    with session_maker() as db:",
+        "detail": "server.api.src.repository.SportsRepository",
+        "documentation": {}
+    },
+    {
+        "label": "getAllSportsWithoutPagination",
+        "kind": 2,
+        "importPath": "server.api.src.repository.SportsRepository",
+        "description": "server.api.src.repository.SportsRepository",
+        "peekOfCode": "def getAllSportsWithoutPagination() -> list[Sport]:\n    with session_maker() as db:\n        query = db.query(Sport).order_by(Sport.id)\n        return query.all()\ndef getSportById(id: int):\n    with session_maker() as db:\n        sport = (\n            db\n            .query(Sport)\n            .options(",
         "detail": "server.api.src.repository.SportsRepository",
         "documentation": {}
     },
@@ -1873,11 +1954,20 @@
         "documentation": {}
     },
     {
+        "label": "getUserByEmail",
+        "kind": 2,
+        "importPath": "server.api.src.repository.UsersRepository",
+        "description": "server.api.src.repository.UsersRepository",
+        "peekOfCode": "def getUserByEmail(email: str):\n    with session_maker() as db:\n        user = db.query(User).filter(User.email == email).first()\n        return user\ndef createUser(user: UserCreateModel, avatar: UploadFile | None):\n    if getUserByEmail(user.email):\n        return False\n    if avatar:\n        current_file_name = upload_file('users/avatars', avatar, avatar.filename)\n    else:",
+        "detail": "server.api.src.repository.UsersRepository",
+        "documentation": {}
+    },
+    {
         "label": "createUser",
         "kind": 2,
         "importPath": "server.api.src.repository.UsersRepository",
         "description": "server.api.src.repository.UsersRepository",
-        "peekOfCode": "def createUser(user: UserCreateModel, avatar: UploadFile | None):\n    if avatar:\n        current_file_name = upload_file('users/avatars', avatar, avatar.filename)\n    else:\n        current_file_name = os.environ.get(\"DEFAULT_AVATARS\")\n    user_dict = {\n        'name': user.name,\n        'email': user.email,\n        'password': Hasher.get_password_hash(user.password),\n        'date_birthday': user.date_birthday,",
+        "peekOfCode": "def createUser(user: UserCreateModel, avatar: UploadFile | None):\n    if getUserByEmail(user.email):\n        return False\n    if avatar:\n        current_file_name = upload_file('users/avatars', avatar, avatar.filename)\n    else:\n        current_file_name = os.environ.get(\"DEFAULT_AVATARS\")\n    user_dict = {\n        'name': user.name,\n        'email': user.email,",
         "detail": "server.api.src.repository.UsersRepository",
         "documentation": {}
     },
@@ -1904,7 +1994,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.competition_router",
         "description": "server.api.src.routers.competition_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/competitions\",\n    tags=[\"Competitions CRUD\"],\n)\n@router.get(\"/\", response_model=Page[CompetitionOut])\nasync def get_competitions():\n    page = CompetitionRepository.getAllCompetition()\n    return page\n@router.get(\"/{id}\")\nasync def get_competition(id: int):",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/competitions\",\n    tags=[\"Competitions CRUD\"],\n)\n@router.get(\"/\", response_model=Page[CompetitionOut])\nasync def get_competitions(params: Params = Depends()):\n    page = CompetitionRepository.getAllCompetition(params)\n    for competition in page.items:\n        if competition.image:\n            competition.image = os.environ.get(\"SERVER_URL\") + competition.image",
         "detail": "server.api.src.routers.competition_router",
         "documentation": {}
     },
@@ -1945,11 +2035,11 @@
         "documentation": {}
     },
     {
-        "label": "update_user",
-        "kind": 2,
+        "label": "templates",
+        "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "def update_user(id: int, \n                name: Annotated[str, Form()],\n                email: Annotated[str, Form()],\n                password: Annotated[str, Form()],\n                date_birthday: Annotated[datetime.date, Form()],\n                sports_category: Annotated[str, Form()],\n                avatar: Optional[UploadFile] = File(None),\n            ):\n    if avatar:\n        file_format = get_file_format(avatar)",
+        "peekOfCode": "templates = Jinja2Templates(directory=\"templates\")\nrouter = APIRouter(\n    prefix=\"/api/users\",\n    tags=[\"Users CRUD\"],\n)\ncookie_params = CookieParameters(\n    max_age=86400\n)\ncookie = SessionCookie(\n    cookie_name=\"cookie\",",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -1958,7 +2048,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/users\",\n    tags=[\"Users CRUD\"],\n)\ncookie_params = CookieParameters()\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",",
+        "peekOfCode": "router = APIRouter(\n    prefix=\"/api/users\",\n    tags=[\"Users CRUD\"],\n)\ncookie_params = CookieParameters(\n    max_age=86400\n)\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -1967,7 +2057,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "cookie_params = CookieParameters()\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",\n    cookie_params=cookie_params,\n)\nbackend = InMemoryBackend()\nverifier = BasicVerifier(",
+        "peekOfCode": "cookie_params = CookieParameters(\n    max_age=86400\n)\ncookie = SessionCookie(\n    cookie_name=\"cookie\",\n    identifier=\"general_verifier\",\n    auto_error=True,\n    secret_key=\"erondondon\",\n    cookie_params=cookie_params,\n)",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -1985,7 +2075,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "backend = InMemoryBackend()\nverifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=True,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)",
+        "peekOfCode": "backend = InMemoryBackend()\nverifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=False,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -1994,7 +2084,7 @@
         "kind": 5,
         "importPath": "server.api.src.routers.user_router",
         "description": "server.api.src.routers.user_router",
-        "peekOfCode": "verifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=True,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)\n    for user in page.items:",
+        "peekOfCode": "verifier = BasicVerifier(\n    identifier=\"general_verifier\",\n    auto_error=False,\n    backend=backend,\n    auth_http_exception=HTTPException(status_code=403, detail=\"invalid session\"),\n)\n@router.get(\"/\", response_model=Page[UserOut])\nasync def get_users(params: Params = Depends()):\n    page = UsersRepository.getAllUsers(params)\n    for user in page.items:",
         "detail": "server.api.src.routers.user_router",
         "documentation": {}
     },
@@ -2147,7 +2237,7 @@
         "kind": 2,
         "importPath": "server.api.main",
         "description": "server.api.main",
-        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\n# @app.middleware(\"http\")\n# async def session_middleware(request: Request, call_next):\n#     # Исключаем страницу `/auth` из проверки сессии\n#     if request.url.path not in [\"/api/templates/auth\", \"/api/templates/registration\"] and \"session_id\" not in request.cookies:\n#         return RedirectResponse(url=\"/api/templates/auth\", status_code=302)\n#     response = await call_next(request)\n#     return response\napp.include_router(sports_router)",
+        "peekOfCode": "def redirect_to_swagger():\n    return RedirectResponse(url=\"/docs\")\napp.include_router(sports_router)\napp.include_router(user_router)\napp.include_router(user_sport_router)\napp.include_router(competition_router)\napp.include_router(user_competition_router)\napp.include_router(template_router)\nif __name__ == \"__main__\":\n    import uvicorn",
         "detail": "server.api.main",
         "documentation": {}
     },

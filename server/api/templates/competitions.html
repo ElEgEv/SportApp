@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список соревнований</title>
+
+    <link rel="stylesheet" href="/public/styles/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Шапка сайта -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/api/templates/main">Мой сайт</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/api/templates/main">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/api/templates/competitions">Соревнования</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/sports">Виды спорта</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/athletes">Спортсмены</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/templates/profile">Личный кабинет</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Контейнер для контента -->
+    <div class="container">
+        <!-- Заголовок и кнопка создания вида спорта -->
+        <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="my-4" style="font-size: 1.5rem; margin: 0;">Список соревнований</h1>
+                <button id="createcompetitionButton" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#competitionModal">Создать соревнование</button>
+            </div>
+
+            <!-- Таблица для отображения данных -->
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Вид спорта</th>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th>Главный судья</th>
+                        <th>Дата</th>
+                        <th>Обложка</th>
+                        <th class="text-center">Действия</th> <!-- Новая колонка для действий -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for competition in page.items %}
+                    <tr>
+                        <td>{{ competition.id }}</td>
+                        <td>{{ competition.sport_id }}</td>
+                        <td>{{ competition.name }}</td>
+                        <td>{{ competition.description }}</td>
+                        <td>{{ competition.chief_judge }}</td>
+                        <td>{{ competition.date }}</td>
+                        <td><img src="{{ competition.image }}" alt="{{ competition.name }}" class="img-user-avatar" /></td>
+                        <td class="text-center">
+                            <!-- Иконки для редактирования и удаления -->
+                            <button class="btn btn-primary btn-sm me-2" data-bs-toggle="modal" 
+                                data-bs-target="#competitionModal" 
+                                data-id="{{ competition.id }}" 
+                                data-name="{{ competition.name }}" 
+                                data-sport_id="{{ competition.sport_id }}" 
+                                data-description="{{ competition.description }}"
+                                data-chief-judge="{{ competition.chief_judge }}" 
+                                data-date="{{ competition.date }}"
+                                data-image="{{ competition.image }}"
+                            >
+                                <i class="fas fa-edit"></i> <!-- Иконка редактирования -->
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deletecompetition({{ competition.id }})">
+                                <i class="fas fa-trash"></i> <!-- Иконка удаления -->
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Навигация по страницам -->
+        <div class="pagination">
+            {% if page.page > 1 %}
+                <a href="/api/templates/competitions?page={{ page.page - 1 }}&size={{ page.size }}" class="page-item">«</a>
+            {% endif %}
+
+            <!-- Отображаем страницы -->
+            {% for p in range(1, page.pages + 1) %}
+                <a href="/api/templates/competitions?page={{ p }}&size={{ page.size }}"
+                    class="page-item {% if p == page.page %} active {% endif %}">{{ p }}</a>
+            {% endfor %}
+
+            {% if page.page < page.pages %} <a href="/api/templates/competitions?page={{ page.page + 1 }}&size={{ page.size }}" class="page-item">
+                »</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Модальное окно для создания/редактирования пользователей -->
+    <div class="modal fade" id="competitionModal" tabindex="-1" aria-labelledby="competitionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="competitionModalLabel">Добавить/Редактировать соревнование</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="competitionForm" action="/competitions" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="competitionId" name="id">
+                        <div class="mb-3">
+                            <label for="sportId" class="form-label">Вид спорта</label>
+                            <select id="sportId" name="sport_id" class="form-select" required>
+                                {% for sport in sports %}
+                                    <option value="{{ sport.id }}">{{ sport.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="competitionName" class="form-label">Название соревнования</label>
+                            <input type="text" id="competitionName" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="competitionDescription" class="form-label">Описание</label>
+                            <textarea id="competitionDescription" name="description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="competitionChiefJudge" class="form-label">Главный судья</label>
+                            <input type="text" id="competitionChiefJudge" name="chief_judge" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="competitionDate" class="form-label">Дата проведения</label>
+                            <input type="date" id="competitionDate" name="date" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="competitionImage" class="form-label">Аватар</label>
+                            <input type="file" id="competitionImage" name="image" class="form-control" accept="image/*">
+                            <div class="mt-2">
+                                <img id="imagePreview" src="#" alt="Превью аватара" class="img-thumbnail d-none" style="max-width: 100px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer d-flex justify-content-end">
+                    <button type="submit" form="competitionForm" class="btn btn-primary" style="width: 15%;">Сохранить</button>
+                    <button type="button" class="btn btn-secondary me-2" style="width: 15%;" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Футер сайта -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Мой сайт. Все права защищены.</p>
+            <p>Разработано командой <a href="/api/templates/main">Мои разработчики</a></p>
+        </div>
+    </footer>
+
+    <!-- Подключаем Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Открытие модального окна для редактирования
+        var competitionModal = document.getElementById('competitionModal')
+        competitionModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var competitionId = button.getAttribute('data-id');
+            var competitionName = button.getAttribute('data-name');
+            var competitionSportId = button.getAttribute('data-sport_id');
+            var competitionDescription = button.getAttribute('data-description');
+            var competitionChiefJudge = button.getAttribute('data-chief-judge');
+            var competitionDate = button.getAttribute('data-date');
+            var competitionImage = button.getAttribute('data-image');
+
+            var modalTitle = competitionModal.querySelector('.modal-title');
+            var nameInput = competitionModal.querySelector('#competitionName');
+            var sportIdInput = competitionModal.querySelector('#sportId');
+            var descriptionInput = competitionModal.querySelector('#competitionDescription');
+            var chiefJudgeInput = competitionModal.querySelector('#competitionChiefJudge');
+            var dateInput = competitionModal.querySelector('#competitionDate');
+            var imageInput = competitionModal.querySelector('#competitionImage');
+            var imagePreview = competitionModal.querySelector('#imagePreview');
+
+            if (competitionId) {
+                modalTitle.textContent = 'Редактирование спортсмена';
+                nameInput.value = competitionName;
+                sportIdInput.value = competitionSportId;
+                descriptionInput.value = competitionDescription;
+                chiefJudgeInput.value = competitionChiefJudge;
+                dateInput.value = competitionDate;
+                imagePreview.src = competitionImage;
+                imagePreview.classList.remove('d-none');
+            } else {
+                modalTitle.textContent = 'Создание спортсмена';
+                nameInput.value = '';
+                sportIdInput.value = '';
+                descriptionInput.value = '';
+                chiefJudgeInput.value = '';
+                dateInput.value = '';
+                imagePreview.src = '';
+                imagePreview.classList.add('d-none');
+            }
+
+            // Обработка отправки формы
+            var form = competitionModal.querySelector('#competitionForm');
+            form.onsubmit = function (e) {
+                e.preventDefault();
+
+                if (competitionId) {
+                    const formData = new FormData();
+                    formData.append('id', competitionId);
+                    formData.append('name', nameInput.value);
+                    formData.append('sport_id', sportIdInput.value);
+                    formData.append('description', descriptionInput.value);
+                    formData.append('chief_judge', chiefJudgeInput.value);
+                    formData.append('date', dateInput.value);
+                    
+                    if (imageInput.files[0]) {
+                        formData.append('image', imageInput.files[0]);
+                    }
+
+                    fetch(`/api/competitions/update/?id=${competitionId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при обновлении соревнования:', error);
+                    });
+
+                } else {
+                    const formData = new FormData();
+                    formData.append('name', nameInput.value);
+                    formData.append('sport_id', sportIdInput.value);
+                    formData.append('description', descriptionInput.value);
+                    formData.append('chief_judge', chiefJudgeInput.value);
+                    formData.append('date', dateInput.value);
+
+                    if (imageInput.files[0]) {
+                        formData.append('image', imageInput.files[0]);
+                    }
+
+                    fetch('/api/competitions/', {
+                        method: 'POST',
+                        headers: {
+                            'accept': 'application/json',
+                        },
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        
+                        //console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Ошибка при создании соревнования:', error);
+                    });
+
+                }
+
+                // Закрытие модального окна
+                var modal = bootstrap.Modal.getInstance(competitionModal);
+                modal.hide();
+
+                window.location.reload();
+            }
+        });
+
+        // Удаление вида спорта
+        function deletecompetition(id) {
+            if (confirm('Вы уверены, что хотите удалить это соревнование?')) {
+                fetch(`/api/competitions/${id}`, {
+                    headers: {
+                        'accept': 'application/json',
+                    },
+                    method: 'DELETE'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Ошибка при удалении соревнования:', error);
+                });
+            }
+        }
+
+        // предпросмотр аватара
+        document.getElementById('competitionImage').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const imagePreview = document.getElementById('imagePreview');
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('d-none');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

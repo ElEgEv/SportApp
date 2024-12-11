@@ -37,12 +37,19 @@
                 <div class="card my-5">
                     <div class="card-header text-center">
                         <h2>Регистрация</h2>
+                        {% if error %}
+                            <div style="color: red;">
+                                <h5>
+                                    {{ error }}
+                                </h5>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="/api/users/create" method="post" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Имя пользователя</label>
-                                <input type="text" id="username" name="username" class="form-control" required>
+                                <input type="text" id="name" name="name" class="form-control" required>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -55,6 +62,18 @@
                             <div class="mb-3">
                                 <label for="confirm-password" class="form-label">Подтвердите пароль</label>
                                 <input type="password" id="confirm-password" name="confirm_password" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="date_birthday" class="form-label">Дата рождения</label>
+                                <input type="date" id="date_birthday" name="date_birthday" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sports_category" class="form-label">Спортивная категория</label>
+                                <input type="text" class="form-control" id="sports_category" name="sports_category" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="avatar" class="form-label">Аватар</label>
+                                <input type="file" class="form-control" id="avatar" name="avatar">
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
                         </form>

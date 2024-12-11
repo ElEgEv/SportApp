@@ -1,7 +1,7 @@
 import os
 from sqlalchemy import select
 from sqlalchemy.orm import joinedload
-from fastapi import UploadFile
+from fastapi import HTTPException, UploadFile
 from fastapi_pagination import Page, Params
 from fastapi_pagination.ext.sqlalchemy import paginate
 from src.database.database import session_maker
@@ -9,6 +9,7 @@ from src.models.models import User, UserCreateModel, UserLogin
 from src.utils.FileOperator import upload_file
 from src.utils.hashing import Hasher
 from src.utils.auth_handler import sign_jwt
+from src.utils.FileOperator import get_file_format
 
 
 def getAllUsers(params: Params) -> Page[User]:
@@ -47,7 +48,17 @@ def getUserById(id: int):
         
         return user
     
+    
+def getUserByEmail(email: str):
+    with session_maker() as db:
+        user = db.query(User).filter(User.email == email).first()
+        return user
+
+    
 def createUser(user: UserCreateModel, avatar: UploadFile | None):
+    if getUserByEmail(user.email):
+        return False
+    
     if avatar:
         current_file_name = upload_file('users/avatars', avatar, avatar.filename)
     else:
@@ -69,7 +80,6 @@ def createUser(user: UserCreateModel, avatar: UploadFile | None):
         db.commit()
         db.refresh(db_user)
         return {
-            "message": "User create success",
             "user": db_user,
             "token": sign_jwt(user.email)
         }
@@ -90,7 +100,7 @@ def updateUser(id: int, user: UserCreateModel, avatar: UploadFile | None):
             user_db.avatars = current_file_name
             
         db.commit()
-        return user
+        return getUserById(id)
     
 def deleteUserById(id: int):
     try:

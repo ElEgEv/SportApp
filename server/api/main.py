@@ -35,14 +35,6 @@ app.mount("/public", StaticFiles(directory=Path("./public")), name="public")
 def redirect_to_swagger():
     return RedirectResponse(url="/docs")
 
-# @app.middleware("http")
-# async def session_middleware(request: Request, call_next):
-#     # Исключаем страницу `/auth` из проверки сессии
-#     if request.url.path not in ["/api/templates/auth", "/api/templates/registration"] and "session_id" not in request.cookies:
-#         return RedirectResponse(url="/api/templates/auth", status_code=302)
-#     response = await call_next(request)
-#     return response
-
 app.include_router(sports_router)
 
 app.include_router(user_router)

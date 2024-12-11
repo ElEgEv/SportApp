@@ -9,6 +9,13 @@ def getAllSports(params: Params) -> Page[Sport]:
         query = db.query(Sport).order_by(Sport.id)
         return paginate(query, params=params)
     
+
+def getAllSportsWithoutPagination() -> list[Sport]:
+    with session_maker() as db:
+        query = db.query(Sport).order_by(Sport.id)
+        return query.all()
+
+    
 def getSportById(id: int):
     with session_maker() as db:
         sport = (

@@ -1,6 +1,7 @@
 import datetime
+import os
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
-from fastapi_pagination import Page
+from fastapi_pagination import Page, Params
 from typing import Annotated, Optional
 from src.repository import CompetitionRepository
 from src.utils.FileOperator import get_file_format
@@ -17,8 +18,15 @@ router = APIRouter(
 
 
 @router.get("/", response_model=Page[CompetitionOut])
-async def get_competitions():
-    page = CompetitionRepository.getAllCompetition()
+async def get_competitions(params: Params = Depends()):
+    page = CompetitionRepository.getAllCompetition(params)
+    
+    for competition in page.items:
+        if competition.image:
+            competition.image = os.environ.get("SERVER_URL") + competition.image
+        else:
+            competition.image = os.environ.get("SERVER_URL") + "public/competitions/images/default.jpg"
+    
     return page
 
 @router.get("/{id}")
@@ -48,8 +56,8 @@ async def create_competition(sport_id: Annotated[int, Form()],
     
     return CompetitionRepository.createCompetition(competition, image)
 
-@router.put("/{id}")
-async def update_competition(id: int, 
+@router.put("/update/")
+async def update_competition(id: Annotated[int, Form()], 
                             sport_id: Annotated[int, Form()],
                             name: Annotated[str, Form()],
                             description: Annotated[str, Form()],

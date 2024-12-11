@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -7,6 +7,7 @@ from fastapi_pagination import Params
 from dotenv import load_dotenv
 import os
 
+from src.repository import CompetitionRepository
 from src.models.models import UserOut
 import src.repository.UsersRepository as UsersRepository
 import src.repository.SportsRepository as SportsRepository
@@ -14,6 +15,7 @@ import src.repository.SportsRepository as SportsRepository
 from src.routers.user_router import cookie, verifier
 
 from src.utils.template_pagination import get_pagination_params
+
 load_dotenv('.env')
 
 templates = Jinja2Templates(directory="templates")
@@ -39,6 +41,22 @@ async def get_users(request: Request, params: Params = Depends(get_pagination_pa
     return templates.TemplateResponse("athletes.html", {"request": request, "page": page_data})
 
 
+@router.get("/competitions", response_class=HTMLResponse)
+async def get_competitions(request: Request, params: Params = Depends(get_pagination_params)):
+    page_data = CompetitionRepository.getAllCompetition(params)
+    
+    sports = SportsRepository.getAllSportsWithoutPagination()
+    
+    for competition in page_data.items:
+        if competition.image:
+            competition.image = os.environ.get("SERVER_URL") + competition.image
+        else:
+            competition.image = os.environ.get("SERVER_URL") + "public/competitions/images/default.jpg"
+    
+    return templates.TemplateResponse("competitions.html", {"request": request, "page": page_data, "sports": sports})
+
+
+
 @router.get("/main", response_class=HTMLResponse)
 async def get_main(request: Request):
     return templates.TemplateResponse("main.html", {"request": request})
@@ -58,13 +76,16 @@ async def get_registration(request: Request):
 async def get_login():
     return templates.TemplateResponse("auth.html", {"request": {}})
 
+
 @router.get("/profile", response_class=HTMLResponse, dependencies=[Depends(cookie)])
 async def get_profile(request: Request, session_data: UserOut = Depends(verifier)):
-    try:       
-        user = UsersRepository.getUserById(session_data.id)
+    try:
+        if not session_data:
+            return RedirectResponse(url="/api/templates/auth", status_code=302)
         
-        user.avatars = os.environ.get("SERVER_URL") + user.avatars
+        user = UsersRepository.getUserById(session_data.id)
+        user.password = session_data.password
         
         return templates.TemplateResponse("profile.html", {"request": request, "user": user})
-    except Exception as e:
-        return RedirectResponse(url="/auth", status_code=302)
+    except HTTPException as e:
+        return RedirectResponse(url="/api/templates/auth", status_code=302)

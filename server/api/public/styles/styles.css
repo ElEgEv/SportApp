@@ -93,6 +93,11 @@ h1 {
     width: 100%;
 }
 
+.img-competition-img {
+    max-width: 80%;
+    width: 100%;
+}
+
 .password-field {
     position: relative;
     max-width: 300px; /* Ширина поля */
